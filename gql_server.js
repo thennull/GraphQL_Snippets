@@ -4,8 +4,8 @@ const { fakeDB } = require("./database");
 
 var typeDefs = gql`
   type Query {
-    human(req: inputRequest): Human
-    starship: Starship
+    human(req: inputHero): Human
+    starship(req: inputShip): Starship
   }
 
   enum Episode {
@@ -19,7 +19,12 @@ var typeDefs = gql`
     FOOT
   }
 
-  input inputRequest {
+  input inputShip {
+    source: String!
+    target: String!
+  }
+
+  input inputHero {
     source: String!
     target: String!
   }
@@ -42,11 +47,9 @@ var resolvers = {
       let data = await fakeDB(args.req);
       return data;
     },
-    starship() {
-      return {
-        name: "X-Wing",
-        length: 50.0,
-      };
+    async starship(obj, args, context, info) {
+      let data = await fakeDB(args.req);
+      return data;
     },
   },
 };
